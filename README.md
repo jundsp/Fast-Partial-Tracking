@@ -6,4 +6,4 @@ J. Neri and P. Depalle, "<a href="http://dafx2018.web.ua.pt/papers/DAFx2018_pape
 
 The script `jun_demo.m` runs a demonstration of the partial tracking method, followed by a re-synthesis of the signal from the detected partials. Instantaneous parameters of the partials are written to a binary file after each analysis frame, which can be read into Matlab again with the corresponding read function.
 
-<img src="https://www.music.mcgill.ca/~julian/dafx18/pictures/partials_kara.png" alt="" width="500">
+<img src="https://www.music.mcgill.ca/~julian/wp-content/uploads/2020/11/partials_kara-768x570.png" alt="" width="500">
