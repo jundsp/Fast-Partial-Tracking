@@ -95,7 +95,7 @@ axis([0 L/fs -inf 5e3]);
 % computer. You can download the source code here:
 % https://sourceforge.net/projects/sdif/
 
-convert_to_sdif = true;
+convert_to_sdif = false;
 if convert_to_sdif
     disp('Creating SDIF file');
     % Change this path to the location of your 'tosdif' executable
