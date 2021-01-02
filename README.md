@@ -6,6 +6,6 @@ J. Neri and P. Depalle, "<a href="http://dafx2018.web.ua.pt/papers/DAFx2018_pape
 
 The script `jun_demo.m` runs a demonstration of the partial tracking method, followed by a re-synthesis of the signal from the detected partials. Instantaneous parameters of the partials are written to a binary file after each analysis frame, which can be read into Matlab again with the corresponding read function.
 
-Partial trajectory data is also written to a Pseudo-SDIF text file. This text file can easily be converted to an SDIF file using the 'tosdif' executable that is compiled with the SDIF package, which can be downloaded from https://sourceforge.net/projects/sdif/files/sdif/.
+Partial trajectory data is written to a Sound Description Interchange Format (SDIF) text file. The text file can be converted to a binary SDIF file using the 'tosdif' executable that is compiled with the SDIF package, which can be downloaded from https://sourceforge.net/projects/sdif/files/sdif/.
 
 <img src="https://www.music.mcgill.ca/~julian/wp-content/uploads/2020/11/partials_kara-768x570.png" alt="" width="500">
