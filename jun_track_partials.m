@@ -44,14 +44,21 @@ function [Partials, time, padding, L, S] = jun_track_partials(y, fs, varargin)
 % International Conference on Digital Audio Effects (DAFx-18), Aveiro,
 % Portugal, pp. 325-333, Sep. 2018.
 %
-% Julian Neri, 180914
+% Julian Neri, 210101
 % McGill University, Montreal, Canada
 % ********************************************************************* %
 
 
-% Sinusoidal model data will be written into the following file.
+% Sinusoidal model data will be written into the following binary file,
 outputFileName = 'demo_partials.bin';
 fileID = fopen(outputFileName,'w');
+
+% and also Pseudo-SDIF text file. This can be converted to SDIF using
+% the 'tosdif' executable.
+sdifFileName = 'demo_partials.txt';
+sdifFileID = fopen(sdifFileName,'w');
+% SDIF Header
+fprintf(sdifFileID,'SDIF\n\n\nSDFC\n\n');
 
 
 %%%%%%%%%%%%%%%%%%    Parse Inputs    %%%%%%%%%%%%%%%%%%
@@ -283,6 +290,7 @@ for m = 1:M
         end
         % Write data into file for frame m-1 
         jun_write_partials(fileID, m-1, time(m-1), num_active_last, Partials{m-1});
+        jun_write_sdif(sdifFileID, fs,time(m-1)/fs, num_active_last, Partials{m-1});
     end
 end
 % Write data into file for frame M
@@ -291,5 +299,10 @@ jun_write_partials(fileID, M, time(M), num_active, Partials{M});
 fseek(fileID,0,'bof');
 fwrite(fileID,num_tracks,'uint');
 fclose(fileID);
+
+% SDIF Footer
+fprintf(sdifFileID,'ENDC\nENDF');
+% Close SDIF text File
+fclose(sdifFileID);
 end
 % eof

@@ -85,26 +85,21 @@ ylabel('Frequency (Hz)');
 axis([0 L/fs -inf 5e3]);
 
 
+
 %%%%%%%%%%%%%%%%%%%%% Convert Pseudo-SDIF to SDIF %%%%%%%%%%%%%%%%%%%%%%%%
 % If 'tosdif' executable file is compiled on your computer, you can use
 % the following script to convert the saved pseduo-sdif text file into 
 % proper .sdif
 % .sdif can be opened in a variety of applications, like IRCAM Audiosculpt.
 
-% In order to use this converter, you must first have SDIF compiled on your
-% computer. You can download the source code here:
-% https://sourceforge.net/projects/sdif/
 
-convert_to_sdif = true;
+convert_to_sdif = false;
+% convert_to_sdif = true; %Uncom
 if convert_to_sdif
-    disp('Creating SDIF file');
-    % Change this path to the location of your 'tosdif' executable
+    % Path to 'tosdif'
     path_tosdif = '/usr/local/bin/tosdif';
-    % File name of input text file (created by jun_track_partials.m).
     in_file_name = 'demo_partials.txt';
-    % Ouput name of sdif file.
     out_file_name = 'demo_partials.sdif';
-    % Run system command 
     command = [path_tosdif,' -i ', in_file_name, ' -o ', out_file_name];
     system(command);
 end
