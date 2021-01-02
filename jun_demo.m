@@ -86,12 +86,11 @@ axis([0 L/fs -inf 5e3]);
 
 
 %%%%%%%%%%%%%%%%%%%%% Convert Pseudo-SDIF to SDIF %%%%%%%%%%%%%%%%%%%%%%%%
-% If 'tosdif' executable file is compiled on your computer, you can use
-% the following script to convert the saved pseduo-sdif text file into 
-% proper .sdif
+% Use the following script to convert the saved SDIF text file into 
+% proper binary .sdif
 % .sdif can be opened in a variety of applications, like IRCAM Audiosculpt.
 
-% In order to use the following script, you must first have SDIF compiled on 
+% To use the following script, you must first have SDIF compiled on 
 % your computer. You can download the source code here:
 % https://sourceforge.net/projects/sdif/files/sdif/
 
