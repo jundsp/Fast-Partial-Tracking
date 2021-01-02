@@ -91,9 +91,9 @@ axis([0 L/fs -inf 5e3]);
 % proper .sdif
 % .sdif can be opened in a variety of applications, like IRCAM Audiosculpt.
 
-% In order to use this converter, you must first have SDIF compiled on your
-% computer. You can download the source code here:
-% https://sourceforge.net/projects/sdif/
+% In order to use the following script, you must first have SDIF compiled on 
+% your computer. You can download the source code here:
+% https://sourceforge.net/projects/sdif/files/sdif/
 
 convert_to_sdif = false;
 if convert_to_sdif
