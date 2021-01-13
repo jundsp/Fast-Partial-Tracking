@@ -290,7 +290,10 @@ for m = 1:M
         end
         % Write data into file for frame m-1 
         jun_write_partials(fileID, m-1, time(m-1), num_active_last, Partials{m-1});
-        jun_write_sdif(sdifFileID, fs,time(m-1)/fs, num_active_last, Partials{m-1});
+        time_sdif = time(m-1) - (padding(1)+1);
+        if time_sdif >= 0 && time_sdif <= (L + H)
+            jun_write_sdif(sdifFileID, fs,time_sdif/fs, num_active_last, Partials{m-1});
+        end
     end
 end
 % Write data into file for frame M

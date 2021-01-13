@@ -22,7 +22,7 @@ input_filename = 'demo_sound.wav';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PARAMETERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Analysis Window Length
-N = 2^11-1; 
+N = 2^nextpow2(.025*fs)-1; 
 % Oversampling Factor
 OverSample = 2;
 % Hop Size Factor (HopSize = N/HopFactor)
