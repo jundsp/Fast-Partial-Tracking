@@ -10,4 +10,4 @@ The script `jun_demo.m` runs a demonstration of the partial tracking method, fol
 
 Partial trajectory data is written to a Sound Description Interchange Format (SDIF) text file. The text file can be converted to a binary SDIF file using the 'tosdif' executable that is compiled with the SDIF package, which can be downloaded from https://sourceforge.net/projects/sdif/files/sdif/.
 
-<img src="https://www.music.mcgill.ca/~julian/wp-content/uploads/2020/11/partials_kara-768x570.png" alt="" width="500">
+![alt text](https://www.music.mcgill.ca/~julian/wp-content/uploads/2020/11/partials_kara-768x570.png)
