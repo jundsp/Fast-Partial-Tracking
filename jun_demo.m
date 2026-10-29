@@ -6,7 +6,7 @@
 % J. Neri and P. Depalle, "Fast Partial Tracking of Audio with Real-Time
 % Capability through Linear Programming", In Proceedings of the 21st
 % International Conference on Digital Audio Effects (DAFx-18), Aveiro,
-% Portugal, pp. 325-333, Sep. 2018.
+% Portugal, pp. 326-333, Sep. 2018.
 %
 % Julian Neri, 210101
 % McGill University, Montreal, Canada
@@ -16,7 +16,7 @@ clc;clear;close all;
 addpath('utilities')
 
 % Input audio
-input_filename = 'demo_sound.wav';
+input_filename = fullfile('audio', 'demo_sound.wav');
 
 [x, fs] = audioread(input_filename);
 

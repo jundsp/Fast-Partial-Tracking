@@ -7,7 +7,7 @@ MATLAB implementation of the partial tracking method from the DAFx-18 paper
 <p align="center">
   <img src="images/partials_kara.png" alt="Tracked partials overlaid on the spectrogram of a male voice saying /kara/" width="640">
   <br>
-  <em>Partials tracked in a male voice (/kara/), drawn over its spectrogram. Each color is one partial.</em>
+  <em>Output of <code>jun_demo.m</code> on the included <code>audio/demo_sound.wav</code> (male voice, /kara/): tracked partials drawn over the spectrogram, one color per partial.</em>
 </p>
 
 ## Quick start
@@ -18,7 +18,7 @@ Open MATLAB in the repository folder and run:
 jun_demo
 ```
 
-The demo tracks the partials of `demo_sound.wav`, resynthesizes the signal from them, prints the reconstruction SNR, plays the result, and plots the partials over the spectrogram. Analysis parameters (window length, hop size, peak threshold, model order, cost-function weights) are set at the top of `jun_demo.m`.
+The demo tracks the partials of `audio/demo_sound.wav`, resynthesizes the signal from them, prints the reconstruction SNR, plays the result, and plots the partials over the spectrogram. Analysis parameters (window length, hop size, peak threshold, model order, cost-function weights) are set at the top of `jun_demo.m`.
 
 ## Files
 
@@ -30,6 +30,8 @@ The demo tracks the partials of `demo_sound.wav`, resynthesizes the signal from 
 | `jun_write_partials.m`, `jun_read_partials.m` | Write partial data to a binary file after each frame, and read it back |
 | `jun_write_sdif.m` | Write partial data to an SDIF text file |
 | `utilities/` | Helper functions (windows, peak picking, assignment, plotting) |
+| `audio/` | Demo sound |
+| `images/` | README figure |
 
 ## SDIF output
 
