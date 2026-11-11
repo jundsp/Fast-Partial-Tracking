@@ -22,7 +22,9 @@ function [Partials, time, padding, L, S] = jun_track_partials(y, fs, varargin)
 % delta: controls the relative preference towards useful assignments.
 %        larger values of delta promote useful assignments (0<delta<1)
 % zetaF, zetaA: the approximate cross-over values from a useful
-%        to spurious assignment. 
+%        to spurious assignment.
+% outputName: base name of the output files <outputName>.bin and
+%        <outputName>.txt (default 'demo_partials'); '' writes no files.
 %
 % OUTPUTS
 % Partials: a cell array, one cell for each frame containing the
@@ -33,8 +35,8 @@ function [Partials, time, padding, L, S] = jun_track_partials(y, fs, varargin)
 % L: the signal length
 % S: the STFT (for plotting later on).
 %
-% These outputs are also written to a binary file using the 
-% jun_write_partials() function.  Read the data with jun_read_partials()
+% These outputs are also written to a binary file (<outputName>.bin) using
+% the jun_write_partials() function.  Read the data with jun_read_partials()
 %
 %
 % Reference:
@@ -47,18 +49,6 @@ function [Partials, time, padding, L, S] = jun_track_partials(y, fs, varargin)
 % Julian Neri, 210101
 % McGill University, Montreal, Canada
 % ********************************************************************* %
-
-
-% Sinusoidal model data will be written into the following binary file,
-outputFileName = 'demo_partials.bin';
-fileID = fopen(outputFileName,'w');
-
-% and also Pseudo-SDIF text file. This can be converted to SDIF using
-% the 'tosdif' executable.
-sdifFileName = 'demo_partials.txt';
-sdifFileID = fopen(sdifFileName,'w');
-% SDIF Header
-fprintf(sdifFileID,'SDIF\n\n\nSDFC\n\n');
 
 
 %%%%%%%%%%%%%%%%%%    Parse Inputs    %%%%%%%%%%%%%%%%%%
@@ -76,11 +66,22 @@ Q = 2;
 delta = .2;
 zetaF = 50;
 zetaA = 15;
+outputName = 'demo_partials';
 
 % Use given parameters if available
-optargs = {N HopFactor OverSample G_g Q delta zetaF zetaA};
+optargs = {N HopFactor OverSample G_g Q delta zetaF zetaA outputName};
 optargs(1:numvarargs) = varargin;
-[N, HopFactor, OverSample, G_g, Q, delta, zetaF, zetaA] = optargs{:};
+[N, HopFactor, OverSample, G_g, Q, delta, zetaF, zetaA, outputName] = optargs{:};
+
+% Sinusoidal model data is written to <outputName>.bin and to a pseudo-SDIF
+% text file <outputName>.txt (convert with the 'tosdif' executable).
+% Pass an empty outputName ('') to skip writing files.
+writeFiles = ~isempty(outputName);
+if writeFiles
+    fileID = fopen([outputName '.bin'],'w');
+    sdifFileID = fopen([outputName '.txt'],'w');
+    fprintf(sdifFileID,'SDIF\n\n\nSDFC\n\n');
+end
 
 % Check/Set Values so they don't produce errors later on.
 N = max(4,round(N));
@@ -180,12 +181,14 @@ num_tracks = 0;
 num_active = 0;
 
 % Write header information to file
-fwrite(fileID,num_tracks,'uint');
-fwrite(fileID,L,'uint');
-fwrite(fileID,fs,'double');
-fwrite(fileID,M,'uint');
-fwrite(fileID,padding(1),'uint');
-fwrite(fileID,padding(2),'uint');
+if writeFiles
+    fwrite(fileID,num_tracks,'uint');
+    fwrite(fileID,L,'uint');
+    fwrite(fileID,fs,'double');
+    fwrite(fileID,M,'uint');
+    fwrite(fileID,padding(1),'uint');
+    fwrite(fileID,padding(2),'uint');
+end
 
 
 %%%%%%%%%%%%%%%%%%%%% PARTIAL TRACKING STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%
@@ -288,24 +291,27 @@ for m = 1:M
             num_active_last = num_active_last + num_toBirth;
             num_tracks = num_tracks + num_toBirth;
         end
-        % Write data into file for frame m-1 
-        jun_write_partials(fileID, m-1, time(m-1), num_active_last, Partials{m-1});
-        time_sdif = time(m-1) - (padding(1)+1);
-        if time_sdif >= 0 && time_sdif <= (L + H)
-            jun_write_sdif(sdifFileID, fs,time_sdif/fs, num_active_last, Partials{m-1});
+        % Write data into file for frame m-1
+        if writeFiles
+            jun_write_partials(fileID, m-1, time(m-1), num_active_last, Partials{m-1});
+            time_sdif = time(m-1) - (padding(1)+1);
+            if time_sdif >= 0 && time_sdif <= (L + H)
+                jun_write_sdif(sdifFileID, fs,time_sdif/fs, num_active_last, Partials{m-1});
+            end
         end
     end
 end
-% Write data into file for frame M
-jun_write_partials(fileID, M, time(M), num_active, Partials{M});
-% Write total number of partials detected
-fseek(fileID,0,'bof');
-fwrite(fileID,num_tracks,'uint');
-fclose(fileID);
+if writeFiles
+    % Write data into file for frame M
+    jun_write_partials(fileID, M, time(M), num_active, Partials{M});
+    % Write total number of partials detected
+    fseek(fileID,0,'bof');
+    fwrite(fileID,num_tracks,'uint');
+    fclose(fileID);
 
-% SDIF Footer
-fprintf(sdifFileID,'ENDC\nENDF');
-% Close SDIF text File
-fclose(sdifFileID);
+    % SDIF Footer
+    fprintf(sdifFileID,'ENDC\nENDF');
+    fclose(sdifFileID);
+end
 end
 % eof
