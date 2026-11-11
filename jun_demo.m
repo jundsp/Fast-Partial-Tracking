@@ -57,7 +57,7 @@ disp('Completed synthesis');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Remove zero-padding
 y = y(padding(1)+1:end-padding(2)); 
-RSNR = 10*log10(sum(x.^2)/sum((x-y).^2));
+RSNR = jun_rsnr(x,y);
 fprintf('\nR-SNR = %4.2f dB\n\n',RSNR);
 
 % Play the synthesized sound
