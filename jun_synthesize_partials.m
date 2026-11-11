@@ -13,7 +13,8 @@ function out = jun_synthesize_partials(Partials, time, L)
 
 out = zeros(L,1);
 
-M = size(Partials);
+M = numel(Partials);
+
 num_active = 0;
 
 for m = 1:M    
