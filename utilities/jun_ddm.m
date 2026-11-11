@@ -72,9 +72,9 @@ if num_peaks > 0
 
         % Check edges
         if any(isnan(alpha_temp))
-            fprintf('NAN estimate, skipping peak %0.0f of frame %0.0f \n', jj, m);
+            fprintf('NAN estimate, skipping peak %0.0f\n', jj);
         elseif any(abs(p([1 N],2:end)*alpha_temp(2:end))>1e100)
-            fprintf('Infinite edges, skipping peak %0.0f of frame %0.0f \n', jj, m)
+            fprintf('Infinite edges, skipping peak %0.0f\n', jj);
         else
             % Solve for alpha0 (approximate)
             gam = win.*exp(p(:,2:end)*alpha_temp(2:end));
