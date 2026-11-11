@@ -53,3 +53,7 @@ If you use this code, please cite:
   year      = {2018}
 }
 ```
+
+## License
+
+MIT. See [LICENSE](LICENSE). `utilities/munkres.m` is by Yi Cao, from the MATLAB File Exchange, and keeps its original license.
