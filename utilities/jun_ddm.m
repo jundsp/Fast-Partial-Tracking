@@ -23,7 +23,8 @@ function [Alpha, num_peaks, S] = jun_ddm(y, Q, R, G_g, win, winD, ...
 
 % Input info
 N = length(y);
-max_y = max(abs(y))*2;
+% Log of the largest sample: bound for the log-amplitude at the frame centre
+log_max_y = log(max(abs(y)));
 
 % Windowed signal
 yst = win.*y;
@@ -83,8 +84,11 @@ if num_peaks > 0
             alpha0 = log(Sp(peakBin(jj),1)) - log(T_gam);
             alpha_temp(1) = alpha0;
 
-            % Final check and save
-            if all(p([1 round(N/2) N],:)*real(alpha_temp) <= max_y)
+            % Final check and save: the real sinusoid's amplitude at n = 0,
+            % 2*exp(real(alpha0)), must not exceed 2*max|y|. Only the centre is
+            % checked; the window vanishes at the edges, where the polynomial
+            % is unconstrained.
+            if real(alpha_temp(1)) <= log_max_y
                 useful = useful + 1;
                 alpha_hat(:,useful) = alpha_temp;
             end
