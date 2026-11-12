@@ -101,9 +101,10 @@ zetaA = zetaA/20*log(10);
 y = y(:,1);
 L = length(y);
 
-% Calculate variance (sigma^2) according to given zeta
-varF = -zetaF^2*log((delta-1)/(delta-2));
-varA = -zetaA^2*log((delta-1)/(delta-2));
+% Denominators 2*sigma^2 of eq. (8) from zeta and delta, eqs. (12)-(13):
+% the useful and spurious costs cross exactly at |Delta| = zeta.
+varF = -zetaF^2/log((delta-1)/(delta-2));
+varA = -zetaA^2/log((delta-1)/(delta-2));
 
 % Analysis Windows
 if OverSample > 1
@@ -160,7 +161,7 @@ p = bsxfun(@power, n, i);
 % Derivative of p time vector
 pD = bsxfun(@times, bsxfun(@power, n, (0:Q-1)), 1:Q);
 % Time index of mid-point between analysis frames (H/2 in paper)
-n_midpoint = [-floor(H/2) ceil(H/2)] + n_center;
+n_midpoint = [-floor(H/2) ceil(H/2)] + n_center + 1;
 
 % Approximate max in the STFT, without computing it directly
 % (for thresholding the peak selection)
