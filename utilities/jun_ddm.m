@@ -87,8 +87,9 @@ if num_peaks > 0
             % Final check and save: the real sinusoid's amplitude at n = 0,
             % 2*exp(real(alpha0)), must not exceed 2*max|y|. Only the centre is
             % checked; the window vanishes at the edges, where the polynomial
-            % is unconstrained.
-            if real(alpha_temp(1)) <= log_max_y
+            % is unconstrained. The frequency at n = 0, imag(alpha1), must be
+            % positive: estimates near DC can come out at or below 0 Hz.
+            if real(alpha_temp(1)) <= log_max_y && imag(alpha_temp(2)) > 0
                 useful = useful + 1;
                 alpha_hat(:,useful) = alpha_temp;
             end
